@@ -368,25 +368,6 @@ class MyHomePage extends StatelessWidget {
               ).show(context);
             },
           ),
-          TextButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
-            child: Text(
-              "ZoomDIALOG",
-              style: TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-            onPressed: () async {
-              await ZoomDialog(
-                zoomScale: 5,
-                child: Container(
-                  child: Text("Zoom me!"),
-                  color: Colors.white,
-                  padding: EdgeInsets.all(20),
-                ),
-              ).show(context);
-            },
-          ),
         ],
       ),
     );

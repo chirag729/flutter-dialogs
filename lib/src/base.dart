@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:ars_dialog/src/transition.dart';
 import 'package:ars_dialog/src/utils.dart';
-import 'package:ars_dialog/src/zoom_widget/zoom_widget.dart';
 import 'package:flutter/material.dart';
 
 /// ArsDialogs widget
@@ -58,7 +57,7 @@ class ArsDialog extends StatelessWidget {
                     ),
                     style: style.titleTextStyle ??
                         dialogTheme.titleTextStyle ??
-                        theme.textTheme.headline6!,
+                        theme.textTheme.titleLarge!,
                   ),
                 )
               : Container(),
@@ -72,7 +71,7 @@ class ArsDialog extends StatelessWidget {
                       child: Semantics(child: content),
                       style: style.contentTextStyle ??
                           dialogTheme.contentTextStyle ??
-                          theme.textTheme.subtitle1!,
+                          theme.textTheme.titleMedium!,
                     ),
                   ),
                 )
@@ -237,72 +236,6 @@ class BlurDialogBackground extends DialogBackground {
       this.blur,
       this.onDismiss})
       : super(key: key);
-}
-
-//A Dialog, but you can zoom on it
-class ZoomDialog extends DialogBackground {
-  ///The (optional) content of the dialog is displayed in the center of the dialog in a lighter font.
-  final Widget child;
-
-  /// Creates an background filter that applies a Gaussian blur.
-  /// Default = 0
-  final double? blur;
-
-  /// Background color
-  final Color? backgroundColor;
-
-  ///Maximum zoom scale
-  final double zoomScale;
-
-  ///Initialize zoom scale on dialog show
-  final double initZoomScale;
-
-  ///Action before dialog dismissed
-  final Function? onDismiss;
-
-  const ZoomDialog(
-      {Key? key,
-      this.backgroundColor,
-      required this.child,
-      this.initZoomScale = 0,
-      this.blur,
-      this.zoomScale = 3,
-      this.onDismiss})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DialogBackground(
-      key: key,
-      dialog: Zoom(
-        onTap: () {
-          Navigator.pop(context);
-          if (onDismiss != null) onDismiss!();
-        },
-        canvasColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        initZoom: initZoomScale,
-        centerOnScale: true,
-        maxZoomWidth: MediaQuery.of(context).size.width * zoomScale,
-        maxZoomHeight: MediaQuery.of(context).size.height * zoomScale,
-        child: Transform.scale(
-          scale: zoomScale,
-          child: Center(
-            child: Container(
-              child: child,
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-          ),
-        ),
-      ),
-      dismissable: true,
-      blur: blur ?? 0,
-      onDismiss: onDismiss,
-      barrierColor: backgroundColor,
-    );
-  }
 }
 
 ///Blur background of dialog, you can use this class to make your custom dialog background blur
